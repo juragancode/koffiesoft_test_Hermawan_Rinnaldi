@@ -219,25 +219,6 @@ class XRegisterViewState extends State<RegisterView> {
                           initialDate: DateTime(2000),
                           firstDate: DateTime(1933),
                           lastDate: DateTime.now(),
-                          // builder: (BuildContext context, Widget? child) {
-                          //   return Theme(
-                          //     data: ThemeData.dark().copyWith(
-                          //       colorScheme: ColorScheme.dark(
-                          //         primary: Color.fromARGB(255, 37, 141,
-                          //             130), // Mengubah warna primary
-                          //         onPrimary: Colors
-                          //             .white, // Mengubah warna teks pada tombol primary
-                          //         surface:
-                          //             Colors.teal, // Mengubah warna background
-                          //         onSurface: Colors
-                          //             .white, // Mengubah warna teks pada background
-                          //       ),
-                          //       dialogBackgroundColor: Colors.grey[
-                          //           800], // Mengubah warna background dialog
-                          //     ),
-                          //     child: child!,
-                          //   );
-                          // },
                         );
                         if (date != null) {
                           controller.tglLahirRegister.text =
@@ -290,7 +271,10 @@ class XRegisterViewState extends State<RegisterView> {
                                     });
                                     Navigator.pop(context);
                                   },
-                                  child: Text('male'),
+                                  child: Text(
+                                    'male',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
                                 SimpleDialogOption(
                                   onPressed: () {
@@ -300,7 +284,10 @@ class XRegisterViewState extends State<RegisterView> {
                                     });
                                     Navigator.pop(context);
                                   },
-                                  child: Text('female'),
+                                  child: Text(
+                                    'female',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
                               ],
                             );
