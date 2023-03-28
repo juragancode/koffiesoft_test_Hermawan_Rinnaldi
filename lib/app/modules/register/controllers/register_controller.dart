@@ -20,6 +20,7 @@ class RegisterController extends GetxController {
   TextEditingController firstnameRegister = TextEditingController();
   TextEditingController lastnameRegister = TextEditingController();
   TextEditingController tglLahirRegister = TextEditingController();
+  TextEditingController grupRegister = TextEditingController();
   TextEditingController genderRegister = TextEditingController();
   TextEditingController passwordRegister = TextEditingController();
   TextEditingController passwordConfirmRegister = TextEditingController();
@@ -30,7 +31,7 @@ class RegisterController extends GetxController {
   RxBool isButtonRegister = true.obs;
   RxBool passwordSama = false.obs;
   RxBool loadingRegister = false.obs;
-  // String selectedGender = "1";
+
   int selectedGender = 1;
 
   void checkButtonStatus() {
@@ -66,6 +67,7 @@ class RegisterController extends GetxController {
     if (passwordRegister.text == passwordConfirmRegister.text) {
       try {
         loadingRegister.value = true;
+        grupRegister.text = "member";
 
         var response = await http.post(
           Uri.parse("https://grinder.koffiesoft.com/users"),
@@ -73,24 +75,25 @@ class RegisterController extends GetxController {
             'accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: {
+          body: jsonEncode({
             "email": emailRegister.text,
             "hp": hpRegister.text,
             "firstname": firstnameRegister.text,
             "lastname": lastnameRegister.text,
-            "grup": "member",
+            "grup": grupRegister.text,
             "role": "",
             "tgl_lahir": tglLahirRegister.text,
-            "jenis_kelamin": selectedGender, // datanya enum 1 / 2
+            "jenis_kelamin": selectedGender,
             "password": passwordConfirmRegister.text,
             "strict_password": false,
             "referral_code": ""
-          },
+          }),
         );
         loadingRegister.value = false;
         Map<String, dynamic> logdata =
             jsonDecode(response.body) as Map<String, dynamic>;
-
+        print(response.body);
+        print(tglLahirRegister.text);
         if (logdata['status']['kode'] == "success") {
           Get.offAllNamed(Routes.SUCCESS);
         } else if (logdata['status']['kode'] == "failed") {
@@ -98,11 +101,17 @@ class RegisterController extends GetxController {
             title: "Terjadi kesalahan",
             middleText: "${logdata['status']['keterangan']}",
           );
+        } else if (logdata['detail']['loc'] == ["body", 204]) {
+          Get.defaultDialog(
+            title: "Terjadi kesalahan",
+            middleText:
+                "${logdata['detail']['msg']} \n ${logdata['detail']['type']} ",
+          );
         }
       } catch (e) {
         Get.defaultDialog(
-          title: "Login gagal",
-          middleText: "Periksa koneksi internet",
+          title: "error",
+          middleText: "$e",
         );
       }
     } else {

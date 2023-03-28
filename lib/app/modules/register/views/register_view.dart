@@ -76,7 +76,7 @@ class XRegisterViewState extends State<RegisterView> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 70),
+                  SizedBox(height: 90),
                   Padding(
                     padding: const EdgeInsets.only(left: 41),
                     child: Text(
@@ -129,6 +129,7 @@ class XRegisterViewState extends State<RegisterView> {
                       focusNode: controller.hpRegisterFN,
                       controller: controller.hpRegister,
                       autocorrect: false,
+                      keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         hintText: 'phone number',
@@ -222,7 +223,7 @@ class XRegisterViewState extends State<RegisterView> {
                         );
                         if (date != null) {
                           controller.tglLahirRegister.text =
-                              DateFormat('yyyy-MM-dd').format(date);
+                              DateFormat('yyyy-MM-dd').format(date).toString();
                         }
                       },
                       readOnly: true,
@@ -265,10 +266,12 @@ class XRegisterViewState extends State<RegisterView> {
                               children: [
                                 SimpleDialogOption(
                                   onPressed: () {
-                                    setState(() {
-                                      controller.selectedGender = 1;
-                                      controller.genderRegister.text = 'male';
-                                    });
+                                    setState(
+                                      () {
+                                        controller.selectedGender = 1;
+                                        controller.genderRegister.text = 'male';
+                                      },
+                                    );
                                     Navigator.pop(context);
                                   },
                                   child: Text(
@@ -278,10 +281,13 @@ class XRegisterViewState extends State<RegisterView> {
                                 ),
                                 SimpleDialogOption(
                                   onPressed: () {
-                                    setState(() {
-                                      controller.selectedGender = 2;
-                                      controller.genderRegister.text = 'female';
-                                    });
+                                    setState(
+                                      () {
+                                        controller.selectedGender = 2;
+                                        controller.genderRegister.text =
+                                            'female';
+                                      },
+                                    );
                                     Navigator.pop(context);
                                   },
                                   child: Text(

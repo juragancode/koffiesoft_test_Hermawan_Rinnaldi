@@ -45,7 +45,7 @@ class LoginController extends GetxController {
       loadingLogin.value = false;
       Map<String, dynamic> logdata =
           jsonDecode(response.body) as Map<String, dynamic>;
-
+      print(response.body);
       if (logdata['status']['kode'] == "success") {
         Get.offAllNamed(Routes.SUCCESS);
       } else if (logdata['status']['kode'] == "failed") {
